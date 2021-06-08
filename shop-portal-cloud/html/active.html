@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="../js/shop/assets/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/pages-JD-index.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-jquery.autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="../js/shop/css/widget-cartPanelView.css" />
+    <title>激活页面</title>
+</head>
+<body>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="../js/jquery-3.3.1.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+
+
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<h1 style="color: #1c7ab3">用户未激活，<a href="#" style="color: #1ba157" onclick="sendActiveMail2()">请点击激活</a></h1>
+
+
+<script>
+    function sendActiveMail() {
+        var v_memberData = $.cookie("memberData");
+        $.ajax({
+            type:"post",
+            url:server_url+"/member/sendActiveMail",
+            contentType:"application/json",
+            data:v_memberData,
+            success:function (result) {
+                if (result.code == 200){
+                    //删除cookie
+                    $.removeCookie("memberData");
+                    location.href="activeSuccess.html";
+
+                }
+            }
+
+        })
+    }
+
+    function sendActiveMail2() {
+        var v_memberData = $.cookie("memberData")
+        //将json格式的字符串 转为json对象
+        var v_param = eval('('+v_memberData+')')
+        $.ajax({
+            type:"post",
+            url:server_url+"/member/sendActiveMail2",
+            data:v_param,
+            success:function (result) {
+                if (result.code == 200){
+                    //删除cookie
+                    $.removeCookie("memberData");
+                    location.href="activeSuccess.html";
+
+                }
+            }
+
+        })
+    }
+</script>
+</body>
+</html>

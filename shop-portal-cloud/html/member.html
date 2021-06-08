@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="zh" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <link rel="stylesheet" type="text/css" href="../js/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="../js/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../js/css/animate-custom.css" />
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Login and Registration Form <span>FH SHOP</span></h1>
+        <nav class="codrops-demos">
+            <!--<span>点击 <strong>"Join us"</strong> 注册</span>-->
+
+
+        </nav>
+    </header>
+    <section>
+        <div id="container_demo" >
+            <a class="hiddenanchor" id="toregister"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+            <div id="wrapper">
+                <div id="login" class="animate form">
+                    <form  action="mysuperscript.php" autocomplete="on">
+                        <h1>登  录</h1>
+                        <p>
+                            <label for="login_memberName" class="uname" data-icon="u" > 会员名 </label>
+                            <input id="login_memberName" name="login_memberName" required="required" type="text" placeholder="请输入会员名"/>
+                        </p>
+                        <p>
+                            <label for="login_password" class="youpasswd" data-icon="p"> 密码 </label>
+                            <input id="login_password" name="login_password" required="required" type="password" placeholder="请输入密码" />
+                        </p>
+                        <p class="keeplogin">
+                            <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
+                            <label for="loginkeeping">记住密码</label>
+                        </p>
+                        <p class="login button">
+                            <input type="button" onclick="login()" value="登录" />
+                        </p>
+                        <p class="change_link">
+                            还没有会员 ?
+                            <a href="#toregister" class="to_register">注册</a>
+                        </p>
+                    </form>
+                </div>
+
+
+                <!--注册-->
+                <div id="register" class="animate form">
+                    <form  action="mysuperscript.php"  id="registerForm">
+                        <h1> 欢迎注册 </h1>
+                        <p>
+                            <label for="memberName" class="uname" data-icon="u">用户名</label>
+                            <input id="memberName" name="memberName" required="required" type="text" placeholder="请设置用户名" />
+                        </p>
+                        <p>
+                            <label for="nickName" class="uname" data-icon="u">昵称</label>
+                            <input id="nickName" name="nickName" required="required" type="text" placeholder="请设置昵称" />
+                        </p>
+                        <p>
+                            <label for="phone" class="phone" data-icon="u">手机号</label>
+                            <input id="phone" name="phone" required="required" type="text" placeholder="请输入手机号" />
+                        </p>
+                        <p>
+                            <label for="mail" class="youmail" data-icon="e" > 邮箱</label>
+                            <input id="mail" name="mail" required="required" type="email" placeholder="请输入邮箱账号"/>
+                        </p>
+                        <p>
+                            <label for="password" class="youpasswd" data-icon="p">密码 </label>
+                            <input id="password" name="password" required="required" type="password" placeholder="请设置登录密码"/>
+                        </p>
+                        <p>
+                            <label for="confirmPassword" class="youpasswd" data-icon="p">确认密码 </label>
+                            <input id="confirmPassword" name="confirmPassword" required="required" type="password" placeholder="请再次输入密码"/>
+                        </p>
+                        <p>
+                            <label for="code"  data-icon="e" > 验证码</label>
+                            <input id="code" name="code" required="required" type="email" placeholder="请输入验证码"/>
+
+
+                        </p>
+                        <p>
+                            <input type="button" onclick="getCode()" value="点击获取验证码"/>
+                        </p>
+
+
+
+                        <p class="signin button">
+                            <input type="submit" onclick="register()" value="注  册"/>
+                        </p>
+                        <p class="change_link">
+                            已经是会员 ?
+                            <a href="#tologin" class="to_register"> 跳转到登录 </a>
+                        </p>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/shop/js/pages/index.js"></script>
+<script>
+
+    //登录
+    function login() {
+        var v_memberName = $("#login_memberName").val();
+        var v_password = $("#login_password").val();
+        // 前台，js验证
+        $.ajax({
+            type:"post",
+            url:"http://localhost:8080/member/login",
+            data:{"memberName":v_memberName,"password":v_password},
+            success:function (result) {
+                if (result.code == 200) {
+                    window.location.href="index.html";
+                } else {
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function getCode() {
+        // 获取验证码
+        phone = $("#registerForm #phone").val();
+        // alert(phone)
+        $.post({
+            data:{"phone":phone},
+            url:"http://localhost:8080/sms/sendCode",
+                success:function(rs){
+                if(rs.code==200){
+                   alert("发送成功，请注意查收！");
+                   console.log(rs);
+                }
+            },
+            error:function(){
+                alert("发送失败");
+            }
+        })
+    }
+
+
+
+
+    function register(){
+            var param = {};
+            // 获取会员名
+            param.memberName = $("#registerForm #memberName").val();
+            // 获取密码
+            param.password = $("#registerForm #password").val();
+            // 获取确认密码
+            param.confirmPassword = $("#registerForm #confirmPassword").val();
+            // 获取昵称
+            param.nickName = $("#registerForm #nickName").val();
+            // 获取电话
+            param.phone = $("#registerForm #phone").val();
+            // 获取邮箱
+            param.mail = $("#registerForm #mail").val();
+            // 获取验证码
+            param.code = $("#registerForm #code").val();
+
+            //
+            $.post({
+                data:param,
+                url:"http://localhost:8080/member/addMember",
+                success:function(rs){
+                    //alert(rs.code)
+                    //sconsole.log(rs);
+                    if(rs.code==200){
+                        alert("注册成功，请登录！");
+                        location.href="#tologin";
+                    }
+                },
+                error:function(){
+                    alert("发送请求失败");
+                }
+            })
+
+
+    }
+</script>
+</body>
+</html>

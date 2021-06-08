@@ -1,0 +1,81 @@
+active:
+  error: http://localhost:63342/shop/shop-portal/html/activeError.html
+  success: http://localhost:63342/shop/shop-portal/html/activeSuccess.html
+ali:
+  returnUrl:
+    fail:
+      page: http://localhost:63342/shop/shop-portal/html/payFail.html
+    page: http://localhost:63342/shop/shop-portal/html/paySuccess.html
+logging:
+  level:
+    com:
+      fh:
+        shop:
+          api: debug
+mail:
+  from: 2861373589@qq.com
+minio:
+  accessKey: minioadmin
+  bucketName: demo
+  endpoint: http://192.168.247.133:9090
+  secretKey: minioadmin
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      id-type: auto
+      table-prefix: t_
+  mapper-locations: classpath*:mappers/*.xml
+server:
+  port: 8082
+sku:
+  limit: 10
+spring:
+  codec:
+    max-in-memory-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 10
+      max-active: 10
+      max-wait: 60000
+      min-evictable-idle-time-millis: 300000
+      min-idle: 5
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1
+      validation-query-timeout: 2000
+    password: 123456789lmy123
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/2008?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+  mail:
+    host: smtp.qq.com
+    password: mwiwrgksdivjddae
+    username: 2861373589@qq.com
+  rabbitmq:
+    host: 192.168.247.132
+    listener:
+      simple:
+        acknowledge-mode: manual
+    password: guest
+    port: 5672
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    username: guest
+    virtual-host: /
+  servlet:
+    multipart:
+      enabled: true
+  application:
+    name: shop-goods-api
+
+eureka:
+  client:
+    register-with-eureka: true #注册到Eureka的注册中心
+    fetch-registry: true #获取注册实例列表
+    service-url:
+      defaultZone: http://localhost:8000/eureka/ #配置注册中心地址
